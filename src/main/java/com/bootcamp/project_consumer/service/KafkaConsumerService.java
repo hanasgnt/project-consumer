@@ -66,7 +66,7 @@ public class KafkaConsumerService {
         if (event.getSupplierId() != null) {
             Suppliers supplier = suppliersRepository
                     .findById(event.getSupplierId())
-                    .orElseThrow(() -> new RuntimeException(
+                    .orElseThrow(() -> new IllegalArgumentException(
                             "Supplier not found: " + event.getSupplierId()));
 
             transaction.setSupplier(supplier);
@@ -75,7 +75,7 @@ public class KafkaConsumerService {
         for (TransactionDetailRequest detailRequest : event.getDetails()) {
             Products product = productsRepository
                     .findById(detailRequest.getProductId())
-                    .orElseThrow(() -> new RuntimeException(
+                    .orElseThrow(() -> new IllegalArgumentException(
                             "Product not found: " + detailRequest.getProductId()));
 
             TransactionDetails detail = new TransactionDetails();
